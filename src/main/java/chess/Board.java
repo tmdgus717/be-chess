@@ -112,7 +112,7 @@ public class Board {
     private String makeRepresentations(List<Piece> pieces) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Piece piece : pieces) {
-            stringBuilder.append(piece.getRepresentation());
+            stringBuilder.append(piece.getType());
         }
         return String.valueOf(stringBuilder);
     }
