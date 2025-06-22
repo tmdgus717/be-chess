@@ -89,7 +89,7 @@ public class Board {
         }
         if (!isPieces(column)) {
             for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createEmpty());
+                add(Piece.createBlank());
             }
         }
     }

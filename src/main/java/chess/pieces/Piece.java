@@ -46,7 +46,7 @@ public class Piece {
         return new Piece(Color.BLACK, type);
     }
 
-    public static Piece createEmpty() {
+    public static Piece createBlank() {
         return new Piece(Color.NOCOLOR, Type.NO_PIECE);
     }
 
