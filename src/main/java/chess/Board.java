@@ -4,6 +4,8 @@ import chess.pieces.Piece;
 
 import static utils.StringUtils.appendNewLine;
 
+import chess.pieces.Piece.Color;
+import chess.pieces.Piece.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +18,28 @@ public class Board {
     private static final int WHITE_PIECES_INDEX = 7;
     private static final int BLACK_PIECES_INDEX = 0;
     private final List<Piece> pieces = new ArrayList<>(PIECES_SIZE);
-    private final List<List<Piece>> board = new ArrayList<>(BOARD_SIZE);
+    private final List<Rank> board = new ArrayList<>(BOARD_SIZE);
 
     public void add(final Piece piece) {
         this.pieces.add(piece);
     }
 
-    public int size(List<Piece> pieces) {
-        return pieces.size();
+    public int size(Rank rank) {
+        return rank.size();
     }
 
     public Piece findPawn(final int index) {
         return this.pieces.get(index);
+    }
+
+    public Piece findPiece(String position) {
+        char x = position.charAt(0);
+        int xPos = x - 'a';
+
+        char y = position.charAt(1);
+        int yPos = 8 - Character.getNumericValue(y);
+
+        return board.get(yPos).getPiece(xPos);
     }
 
     public void initialize() { // 중복 삭제
@@ -88,16 +100,15 @@ public class Board {
         }
         if (!isPieces(column)) {
             for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createEmpty());
+                add(Piece.createBlank());
             }
         }
     }
 
     private void addBoard() {
         //pawns리스트를 copiedPawns에 복사한다 :: clear하면 리스트 내의 모든 값이 사라지므로 복사하여 저장
-        List<Piece> copiedPieces = new ArrayList<>();
-        copiedPieces.addAll(pieces);
-        board.add(copiedPieces);
+        Rank rank = new Rank(pieces);
+        board.add(rank);
         pieces.clear();
     }
 
@@ -109,12 +120,24 @@ public class Board {
         return makeRepresentations(board.get(BLACK_PAWNS_INDEX));
     }
 
-    private String makeRepresentations(List<Piece> pieces) {
+    private String makeRepresentations(Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Piece piece : pieces) {
-            stringBuilder.append(piece.getType());
+        for (Piece piece : rank.getRank()) {
+            addRepresentation(stringBuilder, piece);
         }
         return String.valueOf(stringBuilder);
+    }
+
+    private static void addRepresentation(StringBuilder stringBuilder, Piece piece) {
+        if (piece.isWhite()){
+            stringBuilder.append(piece.getType().getWhiteRepresentation());
+            return;
+        }
+        if (piece.isBlack()) {
+            stringBuilder.append(piece.getType().getBlackRepresentation());
+            return;
+        }
+        stringBuilder.append(piece.getType().getWhiteRepresentation());
     }
 
     public String showBoard() {
@@ -145,4 +168,27 @@ public class Board {
             || column == WHITE_PAWNS_INDEX || column == WHITE_PIECES_INDEX;
     }
 
+    public int countPieces(Color color, Type type) {
+        int count = 0;
+
+        for (Rank rank : board) {
+            count = countMatchingPieces(color, type, count, rank);
+        }
+
+        return count;
+    }
+
+    private int countMatchingPieces(Color color, Type type, int count, Rank rank) {
+        for (Piece piece : rank.getRank()) {
+            if (piece.getColor().equals(color) && piece.getType().equals(type)) count++;
+        }
+        return count;
+    }
+
+    public void initializeEmpty() {
+
+    }
+
+    public void move(String position, Piece piece) {
+    }
 }
