@@ -19,6 +19,10 @@ public class Rank {
 
     List<Piece> pieces = new ArrayList<>(COLUMN_SIZE);
 
+    public Rank() {
+        fillPieces(Type.NO_PIECE, Color.NOCOLOR);
+    }
+
     public Rank(int row) {
          fillRank(row);
     }
@@ -88,5 +92,9 @@ public class Rank {
             }
         }
         return count;
+    }
+
+    public void setPiece(int x, Piece piece) {
+        pieces.set(x, piece);
     }
 }

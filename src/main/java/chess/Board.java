@@ -22,6 +22,12 @@ public class Board {
         }
     }
 
+    public void initializeEmpty() {
+        for (int row = 0; row < RANK_SIZE; row++) {
+            ranks.add(new Rank());
+        }
+    }
+
     private String makeRepresentations(Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Piece piece : rank.getPieces()) {
@@ -67,6 +73,12 @@ public class Board {
         Position position = new Position(positionString);
 
         return ranks.get(position.getY()).getPiece(position.getX());
+    }
+
+    public void move(String positionString, Piece piece) {
+        Position position = new Position(positionString);
+
+        ranks.get(position.getY()).setPiece(position.getX(), piece);
     }
 
 //    private int getCount(int count, int column) {
