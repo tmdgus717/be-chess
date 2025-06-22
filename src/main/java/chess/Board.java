@@ -4,20 +4,22 @@ import chess.pieces.Piece;
 
 import static utils.StringUtils.appendNewLine;
 
-import chess.pieces.Piece.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
 
-    private static final int BOARD_SIZE = 8;
-    private static final int PIECES_SIZE = 8;
-    private static final int WHITE_PAWNS_INDEX = 6;
-    private static final int BLACK_PAWNS_INDEX = 1;
-    private static final int WHITE_PIECES_INDEX = 7;
-    private static final int BLACK_PIECES_INDEX = 0;
-    private final List<Piece> pieces = new ArrayList<>(PIECES_SIZE);
-    private final List<List<Piece>> board = new ArrayList<>(BOARD_SIZE);
+    private static final int RANK_SIZE = 8;
+
+    private final List<Rank> ranks = new ArrayList<>(RANK_SIZE);
+
+    public void initialize() { // 중복 삭제
+        int row = 0;
+        for (Rank rank : ranks) {
+            rank.fillRank(row);
+            row++;
+        }
+    }
 
     public void add(final Piece piece) {
         this.pieces.add(piece);
@@ -31,68 +33,7 @@ public class Board {
         return this.pieces.get(index);
     }
 
-    public void initialize() { // 중복 삭제
-        for (int column = 0; column < BOARD_SIZE; column++) { // 8번 돈다
-            makePieces(column);
-            addBoard();
-        }
-    }
 
-    private void makePieces(int column) {
-        if (column == BLACK_PIECES_INDEX) { // 0 일 때 실행
-            for (int row = 0; row < PIECES_SIZE; row++) {
-                if (row == 0 || row == 7) {
-                    add(Piece.createBlack(Type.ROOK));
-                }
-                if (row == 1 || row == 6) {
-                    add(Piece.createBlack(Type.KNIGHT));
-                }
-                if (row == 2 || row == 5) {
-                    add(Piece.createBlack(Type.BISHOP));
-                }
-                if (row == 3) {
-                    add(Piece.createBlack(Type.QUEEN));
-                }
-                if (row == 4) {
-                    add(Piece.createBlack(Type.KING));
-                }
-            }
-        }
-        if (column == BLACK_PAWNS_INDEX) { // 1 일 때 실행
-            for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createBlack(Type.PAWN));
-            }
-        }
-        if (column == WHITE_PAWNS_INDEX) { // 6 일 때 실행
-            for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createWhite(Type.PAWN));
-            }
-        }
-        if (column == WHITE_PIECES_INDEX) { //7 일 때 실행
-            for (int row = 0; row < PIECES_SIZE; row++) {
-                if (row == 0 || row == 7) {
-                    add(Piece.createWhite(Type.ROOK));
-                }
-                if (row == 1 || row == 6) {
-                    add(Piece.createWhite(Type.KNIGHT));
-                }
-                if (row == 2 || row == 5) {
-                    add(Piece.createWhite(Type.BISHOP));
-                }
-                if (row == 3) {
-                    add(Piece.createWhite(Type.QUEEN));
-                }
-                if (row == 4) {
-                    add(Piece.createWhite(Type.KING));
-                }
-            }
-        }
-        if (!isPieces(column)) {
-            for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createBlank());
-            }
-        }
-    }
 
     private void addBoard() {
         //pawns리스트를 copiedPawns에 복사한다 :: clear하면 리스트 내의 모든 값이 사라지므로 복사하여 저장
@@ -132,7 +73,7 @@ public class Board {
 
     public int pieceCount() {
         int count = 0;
-        for (int column = 0; column < BOARD_SIZE; column++) {
+        for (int column = 0; column < RANK_SIZE; column++) {
             count = getCount(count, column);
         }
         return count;
