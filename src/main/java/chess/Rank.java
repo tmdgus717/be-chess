@@ -97,4 +97,10 @@ public class Rank {
     public void setPiece(int x, Piece piece) {
         pieces.set(x, piece);
     }
+
+    public Double calculatePointBy(Color color) {
+        return pieces.stream()
+            .filter(piece -> piece.getColor() == color)
+            .mapToDouble(Piece::getPoint).sum();
+    }
 }

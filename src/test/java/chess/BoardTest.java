@@ -6,7 +6,6 @@ import static utils.StringUtils.appendNewLine;
 
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
-import chess.pieces.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,5 +65,31 @@ class BoardTest {
 
         assertThat(board.findPiece(position)).isEqualTo(piece);
         System.out.println(board.showBoard());
+    }
+
+
+    @Test
+    public void caculcatePoint() throws Exception {
+        board.initializeEmpty();
+
+        addPiece("b6", Piece.createBlack(Type.PAWN));
+        addPiece("e6", Piece.createBlack(Type.QUEEN));
+        addPiece("b8", Piece.createBlack(Type.KING));
+        addPiece("c8", Piece.createBlack(Type.ROOK));
+
+        addPiece("f2", Piece.createWhite(Type.PAWN)); //1
+        addPiece("g2", Piece.createWhite(Type.PAWN)); //1.5
+        addPiece("g3", Piece.createWhite(Type.PAWN)); //2
+        addPiece("e1", Piece.createWhite(Type.ROOK)); //7
+        addPiece("f1", Piece.createWhite(Type.KING)); //7
+
+        assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(15.0);
+        assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(7.0);
+
+        System.out.println(board.showBoard());
+    }
+
+    private void addPiece(String position, Piece piece) {
+        board.move(position, piece);
     }
 }

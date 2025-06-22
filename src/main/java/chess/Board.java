@@ -81,15 +81,39 @@ public class Board {
         ranks.get(position.getY()).setPiece(position.getX(), piece);
     }
 
-//    private int getCount(int count, int column) {
-//        if (isPieces(column)) {
-//            count += size(board.get(column));
-//        }
-//        return count;
-//    }
-//
-//    private boolean isPieces(int column) {
-//        return column == BLACK_PIECES_INDEX || column == BLACK_PAWNS_INDEX
-//            || column == WHITE_PAWNS_INDEX || column == WHITE_PIECES_INDEX;
-//    }
+    public void move(String before, String after) {
+
+    }
+
+    public Double calculatePoint(Color color) {
+        double point = 0;
+        for (Rank rank : ranks) {
+            point += rank.calculatePointBy(color);
+        }
+
+        point = calculatePointDetail(point, color);
+
+        return point;
+    }
+
+    private double calculatePointDetail(double point, Color color) {
+
+        for (int i = 0; i < 8; i++) {
+            int count = 0;
+            for (Rank rank : ranks) {
+                Piece piece = rank.getPiece(i);
+                if (piece.isSame(color, Type.PAWN)) {
+                    count++;
+                }
+            }
+
+            if (count >= 2) {
+                double pawnPoint = Type.PAWN.getScore() * count;
+                pawnPoint /= 2;
+                point -= pawnPoint;
+            }
+        }
+
+        return point;
+    }
 }
