@@ -17,37 +17,41 @@ public class Rank {
         Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN, Type.KING, Type.BISHOP, Type.KNIGHT, Type.ROOK
     );
 
-    List<Piece> columns = new ArrayList<>(COLUMN_SIZE);
+    List<Piece> pieces = new ArrayList<>(COLUMN_SIZE);
+
+    public Rank(int row) {
+         fillRank(row);
+    }
 
     public void fillRank(int row) {
         if (row == BLACK_PIECES_INDEX){
-            fillByTypeOrder(Color.BLACK);
+            fillPiecesByTypeOrder(Color.BLACK);
             return;
         }
         if (row == BLACK_PAWNS_INDEX){
-            fillColumns(Type.PAWN, Color.BLACK);
+            fillPieces(Type.PAWN, Color.BLACK);
             return;
         }
         if (row == WHITE_PAWNS_INDEX){
-            fillColumns(Type.PAWN, Color.WHITE);
+            fillPieces(Type.PAWN, Color.WHITE);
             return;
         }
         if(row == WHITE_PIECES_INDEX){
-            fillByTypeOrder(Color.WHITE);
+            fillPiecesByTypeOrder(Color.WHITE);
             return;
         }
-        fillColumns(Type.NO_PIECE, Color.NOCOLOR);
+        fillPieces(Type.NO_PIECE, Color.NOCOLOR);
     }
 
-    private void fillByTypeOrder(Color color) {
+    private void fillPiecesByTypeOrder(Color color) {
         for (Type type : TYPE_ORDER) {
-            columns.add(createPiece(type, color));
+            pieces.add(createPiece(type, color));
         }
     }
 
-    private void fillColumns(Type type, Color color) {
+    private void fillPieces(Type type, Color color) {
         for (int i = 0; i < COLUMN_SIZE; i++) {
-            columns.add(createPiece(type, color));
+            pieces.add(createPiece(type, color));
         }
     }
 
@@ -56,5 +60,29 @@ public class Rank {
             return Piece.createBlank();
         }
         return color == Color.BLACK ? Piece.createBlack(type) : Piece.createWhite(type);
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
+    }
+
+    public int countPieceBy(Color color, Type type) {
+        int count = 0;
+        for (Piece piece : pieces) {
+            if(piece.isSame(color, type)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countPieces() {
+        int count = 0;
+        for (Piece piece : pieces) {
+            if (piece.getType() != Type.NO_PIECE) {
+                count++;
+            }
+        }
+        return count;
     }
 }

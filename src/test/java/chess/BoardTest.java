@@ -4,6 +4,8 @@ import chess.pieces.Piece;
 
 import static utils.StringUtils.appendNewLine;
 
+import chess.pieces.Piece.Color;
+import chess.pieces.Piece.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ class BoardTest {
     @DisplayName("보드 생성시 기물 갯수와 출력값 테스트")
     public void create() throws Exception {
         board.initialize();
-        assertThat(board.pieceCount()).isEqualTo(32);
+        assertThat(board.countAllPieces()).isEqualTo(32);
 
         String blankRank = appendNewLine("........");
         assertThat(board.showBoard()).isEqualTo(
@@ -38,8 +40,8 @@ class BoardTest {
     @DisplayName("검정 폰과 흰색 폰이 8개씩 올바르게 생성되었는지 확인")
     public void initialize() throws Exception {
         board.initialize();
-        assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
-        assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
+        assertThat(board.countPieceBy(Color.BLACK, Type.PAWN)).isEqualTo(8);
+        assertThat(board.countPieceBy(Color.WHITE, Type.PAWN)).isEqualTo(8);
     }
 
 }

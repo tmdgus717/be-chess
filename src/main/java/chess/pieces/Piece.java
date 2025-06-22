@@ -9,7 +9,7 @@ public class Piece {
     public enum Type {
         PAWN('p'),
         ROOK('r'),
-        KNIGHT('k'),
+        KNIGHT('n'),
         BISHOP('b'),
         QUEEN('q'),
         KING('k'),
@@ -38,6 +38,14 @@ public class Piece {
         this.type = type;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
     public static Piece createWhite(Type type) {
         return new Piece(Color.WHITE, type);
     }
@@ -50,19 +58,18 @@ public class Piece {
         return new Piece(Color.NOCOLOR, Type.NO_PIECE);
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
     public boolean isBlack() {
-        return color.equals(Color.BLACK);
+        return this.color == Color.BLACK;
     }
 
     public boolean isWhite() {
-        return color.equals(Color.WHITE);
+        return this.color == Color.WHITE;
+    }
+
+    public boolean isSame(Color color, Type type) {
+        if (this.color == color && this.type == type) {
+            return true;
+        }
+        return false;
     }
 }
