@@ -72,17 +72,27 @@ public class Board {
         //a8 : a->col/ 8->row (1~8)
         Position position = new Position(positionString);
 
-        return ranks.get(position.getY()).getPiece(position.getX());
+        Rank rank = findRank(position);
+        return rank.getPiece(position);
     }
 
     public void move(String positionString, Piece piece) {
         Position position = new Position(positionString);
 
-        ranks.get(position.getY()).setPiece(position.getX(), piece);
+        Rank rank = findRank(position);
+        rank.setPiece(position, piece);
     }
 
     public void move(String before, String after) {
+        Position beforePos = new Position(before);
 
+        Piece beforePiece = findRank(beforePos).getPiece(beforePos);
+        move(after, beforePiece);
+        move(before, Piece.createBlank());
+    }
+
+    private Rank findRank(Position position) {
+        return ranks.get(position.getY());
     }
 
     public Double calculatePoint(Color color) {
@@ -101,7 +111,7 @@ public class Board {
         for (int i = 0; i < 8; i++) {
             int count = 0;
             for (Rank rank : ranks) {
-                Piece piece = rank.getPiece(i);
+                Piece piece = rank.getPieceByIndex(i);
                 if (piece.isSame(color, Type.PAWN)) {
                     count++;
                 }

@@ -3,6 +3,7 @@ package chess;
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
+import chess.pieces.Position;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class Rank {
          fillRank(row);
     }
 
-    public Piece getPiece(int col) {
-        return pieces.get(col);
+    public Piece getPiece(Position position) {
+        return pieces.get(position.getX());
     }
 
     public void fillRank(int row) {
@@ -94,13 +95,17 @@ public class Rank {
         return count;
     }
 
-    public void setPiece(int x, Piece piece) {
-        pieces.set(x, piece);
+    public void setPiece(Position position, Piece piece) {
+        pieces.set(position.getX(), piece);
     }
 
     public Double calculatePointBy(Color color) {
         return pieces.stream()
             .filter(piece -> piece.getColor() == color)
             .mapToDouble(Piece::getPoint).sum();
+    }
+
+    public Piece getPieceByIndex(int index) {
+        return pieces.get(index);
     }
 }

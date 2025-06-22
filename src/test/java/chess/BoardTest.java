@@ -92,4 +92,18 @@ class BoardTest {
     private void addPiece(String position, Piece piece) {
         board.move(position, piece);
     }
+
+    @Test
+    public void move2() throws Exception {
+        board.initialize();
+
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        board.move(sourcePosition, targetPosition);
+
+        System.out.println(board.showBoard());
+
+        assertThat(board.findPiece(sourcePosition)).isEqualTo(Piece.createBlank());
+        assertThat(board.findPiece(targetPosition)).isEqualTo(Piece.createWhite(Type.PAWN));
+    }
 }
