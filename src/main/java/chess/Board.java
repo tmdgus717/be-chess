@@ -6,6 +6,7 @@ import static utils.StringUtils.appendNewLine;
 
 import chess.pieces.Piece.Color;
 import chess.pieces.Piece.Type;
+import chess.pieces.Position;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,12 @@ public class Board {
         return count;
     }
 
+    public Piece findPiece(String positionString) {
+        //a8 : a->col/ 8->row (1~8)
+        Position position = new Position(positionString);
+
+        return ranks.get(position.getY()).getPiece(position.getX());
+    }
 
 //    private int getCount(int count, int column) {
 //        if (isPieces(column)) {
@@ -73,5 +80,4 @@ public class Board {
 //        return column == BLACK_PIECES_INDEX || column == BLACK_PAWNS_INDEX
 //            || column == WHITE_PAWNS_INDEX || column == WHITE_PIECES_INDEX;
 //    }
-
 }

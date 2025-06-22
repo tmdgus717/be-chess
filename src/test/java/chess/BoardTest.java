@@ -40,8 +40,18 @@ class BoardTest {
     @DisplayName("검정 폰과 흰색 폰이 8개씩 올바르게 생성되었는지 확인")
     public void initialize() throws Exception {
         board.initialize();
+
         assertThat(board.countPieceBy(Color.BLACK, Type.PAWN)).isEqualTo(8);
         assertThat(board.countPieceBy(Color.WHITE, Type.PAWN)).isEqualTo(8);
     }
 
+    @Test
+    public void findPiece() throws Exception {
+        board.initialize();
+
+        assertThat(board.findPiece("a8")).isEqualTo(Piece.createBlack(Type.ROOK));
+        assertThat(board.findPiece("h8")).isEqualTo(Piece.createBlack(Type.ROOK));
+        assertThat(board.findPiece("a1")).isEqualTo(Piece.createWhite(Type.ROOK));
+        assertThat(board.findPiece("h1")).isEqualTo(Piece.createWhite(Type.ROOK));
+    }
 }

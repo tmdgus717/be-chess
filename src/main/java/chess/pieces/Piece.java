@@ -72,4 +72,10 @@ public class Piece {
         }
         return false;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Piece piece = (Piece) o;
+        return isSame(piece.color, piece.type);
+    }
 }

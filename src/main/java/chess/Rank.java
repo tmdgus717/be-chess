@@ -23,6 +23,10 @@ public class Rank {
          fillRank(row);
     }
 
+    public Piece getPiece(int col) {
+        return pieces.get(col);
+    }
+
     public void fillRank(int row) {
         if (row == BLACK_PIECES_INDEX){
             fillPiecesByTypeOrder(Color.BLACK);
