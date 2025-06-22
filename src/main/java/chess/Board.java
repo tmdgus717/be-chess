@@ -4,6 +4,7 @@ import chess.pieces.Piece;
 
 import static utils.StringUtils.appendNewLine;
 
+import chess.pieces.Piece.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,48 +42,48 @@ public class Board {
         if (column == BLACK_PIECES_INDEX) { // 0 일 때 실행
             for (int row = 0; row < PIECES_SIZE; row++) {
                 if (row == 0 || row == 7) {
-                    add(Piece.createBlackRook());
+                    add(Piece.createBlack(Type.ROOK));
                 }
                 if (row == 1 || row == 6) {
-                    add(Piece.createBlackKnight());
+                    add(Piece.createBlack(Type.KNIGHT));
                 }
                 if (row == 2 || row == 5) {
-                    add(Piece.createBlackBishop());
+                    add(Piece.createBlack(Type.BISHOP));
                 }
                 if (row == 3) {
-                    add(Piece.createBlackQueen());
+                    add(Piece.createBlack(Type.QUEEN));
                 }
                 if (row == 4) {
-                    add(Piece.createBlackKing());
+                    add(Piece.createBlack(Type.KING));
                 }
             }
         }
         if (column == BLACK_PAWNS_INDEX) { // 1 일 때 실행
             for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createBlackPawn());
+                add(Piece.createBlack(Type.PAWN));
             }
         }
         if (column == WHITE_PAWNS_INDEX) { // 6 일 때 실행
             for (int row = 0; row < PIECES_SIZE; row++) {
-                add(Piece.createWhitePawn());
+                add(Piece.createWhite(Type.PAWN));
             }
         }
         if (column == WHITE_PIECES_INDEX) { //7 일 때 실행
             for (int row = 0; row < PIECES_SIZE; row++) {
                 if (row == 0 || row == 7) {
-                    add(Piece.createWhiteRook());
+                    add(Piece.createWhite(Type.ROOK));
                 }
                 if (row == 1 || row == 6) {
-                    add(Piece.createWhiteKnight());
+                    add(Piece.createWhite(Type.KNIGHT));
                 }
                 if (row == 2 || row == 5) {
-                    add(Piece.createWhiteBishop());
+                    add(Piece.createWhite(Type.BISHOP));
                 }
                 if (row == 3) {
-                    add(Piece.createWhiteQueen());
+                    add(Piece.createWhite(Type.QUEEN));
                 }
                 if (row == 4) {
-                    add(Piece.createWhiteKing());
+                    add(Piece.createWhite(Type.KING));
                 }
             }
         }
@@ -112,7 +113,11 @@ public class Board {
     private String makeRepresentations(List<Piece> pieces) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Piece piece : pieces) {
-            stringBuilder.append(piece.getType());
+            if (piece.isBlack()){
+                stringBuilder.append(piece.getType().getBlackRepresentation());
+            }else {
+                stringBuilder.append(piece.getType().getWhiteRepresentation());
+            }
         }
         return String.valueOf(stringBuilder);
     }

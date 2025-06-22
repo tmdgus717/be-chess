@@ -7,8 +7,16 @@ public class Piece {
     }
 
     public enum Type {
-        PAWN('p'), ROOK('r'), KNIGHT('k'), BISHOP('b'), QUEEN('q'), KING('k'), NO_PIECE('.');
+        PAWN('p'),
+        ROOK('r'),
+        KNIGHT('k'),
+        BISHOP('b'),
+        QUEEN('q'),
+        KING('k'),
+        NO_PIECE('.');
+
         private char representation;
+
         Type(char representation){
             this.representation = representation;
         }
@@ -23,60 +31,19 @@ public class Piece {
     }
 
     private final Color color;
-    private final Type name;
+    private final Type type;
 
-    private Piece(Color color, Type name) {
+    private Piece(Color color, Type type) {
         this.color = color;
-        this.name = name;
+        this.type = type;
     }
 
-    public static Piece createWhitePawn() {
-        return new Piece(Color.WHITE, Type.PAWN);
+    public static Piece createWhite(Type type) {
+        return new Piece(Color.WHITE, type);
     }
 
-    public static Piece createBlackPawn() {
-        return new Piece(Color.BLACK, Type.PAWN);
-    }
-
-    public static Piece createWhiteKnight() {
-        return new Piece(Color.WHITE, Type.KNIGHT);
-    }
-
-    public static Piece createBlackKnight() {
-        return new Piece(Color.BLACK, Type.KNIGHT);
-
-    }
-
-    public static Piece createWhiteRook() {
-        return new Piece(Color.WHITE, Type.ROOK);
-    }
-
-    public static Piece createBlackRook() {
-        return new Piece(Color.BLACK, Type.ROOK);
-    }
-
-    public static Piece createWhiteBishop() {
-        return new Piece(Color.WHITE, Type.BISHOP);
-    }
-
-    public static Piece createBlackBishop() {
-        return new Piece(Color.BLACK, Type.BISHOP);
-    }
-
-    public static Piece createWhiteQueen() {
-        return new Piece(Color.WHITE, Type.QUEEN);
-    }
-
-    public static Piece createBlackQueen() {
-        return new Piece(Color.BLACK, Type.QUEEN);
-    }
-
-    public static Piece createWhiteKing() {
-        return new Piece(Color.WHITE, Type.KING);
-    }
-
-    public static Piece createBlackKing() {
-        return new Piece(Color.BLACK, Type.KING);
+    public static Piece createBlack(Type type){
+        return new Piece(Color.BLACK, type);
     }
 
     public static Piece createEmpty() {
@@ -88,13 +55,14 @@ public class Piece {
     }
 
     public Type getType() {
-        return name;
+        return type;
     }
+
     public boolean isBlack() {
-        return color.equals("black");
+        return color.equals(Color.BLACK);
     }
 
     public boolean isWhite() {
-        return color.equals("white");
+        return color.equals(Color.WHITE);
     }
 }
