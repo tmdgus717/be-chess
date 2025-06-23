@@ -28,24 +28,8 @@ public class Board {
         }
     }
 
-    private String makeRepresentations(Rank rank) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Piece piece : rank.getPieces()) {
-            if (piece.isBlack()){
-                stringBuilder.append(piece.getType().getBlackRepresentation());
-            }else {
-                stringBuilder.append(piece.getType().getWhiteRepresentation());
-            }
-        }
-        return String.valueOf(stringBuilder);
-    }
-
-    public String showBoard() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Rank rank : ranks) {
-            stringBuilder.append(appendNewLine(makeRepresentations(rank)));
-        }
-        return String.valueOf(stringBuilder);
+    public List<Rank> getRanks() {
+        return ranks;
     }
 
     public int countPieceBy(Color color, Type type) {

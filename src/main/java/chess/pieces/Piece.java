@@ -2,6 +2,10 @@ package chess.pieces;
 
 public class Piece {
 
+    private final Color color;
+
+    private final Type type;
+
     public enum Color {
         WHITE, BLACK, NOCOLOR;
     }
@@ -38,13 +42,12 @@ public class Piece {
         }
     }
 
-    private final Color color;
-    private final Type type;
 
     private Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
     }
+
 
     public Color getColor() {
         return color;

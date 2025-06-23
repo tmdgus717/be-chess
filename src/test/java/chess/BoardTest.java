@@ -15,10 +15,13 @@ import static org.assertj.core.api.Assertions.*;
 class BoardTest {
 
     Board board;
+    ChessView chessView;
 
     @BeforeEach
     public void setUp() {
+
         board = new Board();
+        chessView = new ChessView(board);
     }
 
     @Test
@@ -28,7 +31,7 @@ class BoardTest {
         assertThat(board.countAllPieces()).isEqualTo(32);
 
         String blankRank = appendNewLine("........");
-        assertThat(board.showBoard()).isEqualTo(
+        assertThat(chessView.showBoard()).isEqualTo(
             appendNewLine("RNBQKBNR") +
                 appendNewLine("PPPPPPPP") +
                 blankRank + blankRank + blankRank + blankRank +
@@ -64,7 +67,7 @@ class BoardTest {
         board.move(position, piece);
 
         assertThat(board.findPiece(position)).isEqualTo(piece);
-        System.out.println(board.showBoard());
+        System.out.println(chessView.showBoard());
     }
 
 
@@ -86,7 +89,7 @@ class BoardTest {
         assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(15.0);
         assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(7.0);
 
-        System.out.println(board.showBoard());
+        System.out.println(chessView.showBoard());
     }
 
     private void addPiece(String position, Piece piece) {
@@ -101,7 +104,7 @@ class BoardTest {
         String targetPosition = "b3";
         board.move(sourcePosition, targetPosition);
 
-        System.out.println(board.showBoard());
+        System.out.println(chessView.showBoard());
 
         assertThat(board.findPiece(sourcePosition)).isEqualTo(Piece.createBlank());
         assertThat(board.findPiece(targetPosition)).isEqualTo(Piece.createWhite(Type.PAWN));

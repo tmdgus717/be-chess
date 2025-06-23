@@ -1,5 +1,6 @@
 import chess.Board;
 
+import chess.ChessView;
 import java.util.Scanner;
 
 public class Main {
@@ -12,25 +13,30 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Board board = new Board();
+        ChessView chessView = new ChessView(board);
 
         while (true) {
             String command = scanner.nextLine();
             if (command.equals(START)) {
                 board.initialize();
-                System.out.println(board.showBoard());
+                System.out.println(chessView.showBoard());
             }
 
             if (command.startsWith(MOVE)) {
-                String[] s = command.split(" ");
-                String before = s[1];
-                String after = s[2];
-                board.move(before, after);
-                System.out.println(board.showBoard());
+                String[] position = extractPosition(command);
+
+                board.move(position[0], position[1]);
+                System.out.println(chessView.showBoard());
             }
 
             if (command.equals(END)) {
                 break;
             }
         }
+    }
+
+    private static String[] extractPosition(String command) {
+        String[] parts = command.split(" ");
+        return new String[] { parts[1], parts[2] };
     }
 }
