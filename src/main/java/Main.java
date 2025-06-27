@@ -1,6 +1,16 @@
 import chess.Board;
 
 import chess.ChessView;
+import chess.pieces.Bishop;
+import chess.pieces.King;
+import chess.pieces.PieceFactory;
+import chess.pieces.creator.BishopCreator;
+import chess.pieces.creator.KingCreator;
+import chess.pieces.creator.PawnCreator;
+import chess.pieces.creator.PieceCreator;
+import chess.pieces.creator.QueenCreator;
+import chess.pieces.creator.RookCreator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +18,6 @@ public class Main {
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
-
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

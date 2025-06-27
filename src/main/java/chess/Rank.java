@@ -2,8 +2,9 @@ package chess;
 
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
-import chess.pieces.Piece.Type;
+import chess.pieces.PieceFactory;
 import chess.pieces.Position;
+import chess.pieces.enums.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,10 +66,12 @@ public class Rank {
     }
 
     private Piece createPiece(Type type, Color color) {
+        PieceFactory pieceFactory = PieceFactory.getInstance();
+
         if (type == Type.NO_PIECE) {
-            return Piece.createBlank();
+            return pieceFactory.createBlank();
         }
-        return color == Color.BLACK ? Piece.createBlack(type) : Piece.createWhite(type);
+        return color == Color.BLACK ? pieceFactory.createBlack(type) : pieceFactory.createWhite(type);
     }
 
     public List<Piece> getPieces() {

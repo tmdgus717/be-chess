@@ -1,7 +1,7 @@
 package chess.pieces;
 
 import chess.pieces.Piece.Color;
-import chess.pieces.Piece.Type;
+import chess.pieces.enums.Type;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.*;
@@ -39,7 +39,7 @@ class PieceTest {
     @Test
     @DisplayName("검정색 Type 기물과 흰색 Type 기물의 식별 문자를 제대로 가져오는지 확인하는 테스트")
     public void getRepresentationPerPiece() throws Exception {
-        assertThat(Piece.Type.PAWN.getWhiteRepresentation()).isEqualTo('p');
-        assertThat(Piece.Type.PAWN.getBlackRepresentation()).isEqualTo('P');
+        assertThat(Type.PAWN.getWhiteRepresentation()).isEqualTo('p');
+        assertThat(Type.PAWN.getBlackRepresentation()).isEqualTo('P');
     }
 }

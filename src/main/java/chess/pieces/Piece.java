@@ -1,53 +1,26 @@
 package chess.pieces;
 
-public class Piece {
+import chess.pieces.enums.Direction;
+import chess.pieces.enums.Type;
+import java.util.List;
+
+public abstract class Piece {
 
     private final Color color;
 
     private final Type type;
 
+    private final List<Direction> directions;
+
     public enum Color {
         WHITE, BLACK, NOCOLOR;
     }
 
-    public enum Type {
-        PAWN('p', 1),
-        ROOK('r', 5),
-
-        KNIGHT('n', 2.5),
-        BISHOP('b', 3),
-
-        QUEEN('q', 9),
-        KING('k', 0),
-        NO_PIECE('.', 0);
-
-        private char representation;
-        private double score;
-
-        Type(char representation, double score) {
-            this.representation = representation;
-            this.score = score;
-        }
-
-        public char getWhiteRepresentation() {
-            return this.representation;
-        }
-
-        public char getBlackRepresentation() {
-            return Character.toUpperCase(this.representation);
-        }
-
-        public double getScore() {
-            return score;
-        }
-    }
-
-
-    private Piece(Color color, Type type) {
+    public Piece(Color color, Type type, List<Direction> directions) {
         this.color = color;
         this.type = type;
+        this.directions = directions;
     }
-
 
     public Color getColor() {
         return color;
@@ -57,17 +30,7 @@ public class Piece {
         return type;
     }
 
-    public static Piece createWhite(Type type) {
-        return new Piece(Color.WHITE, type);
-    }
-
-    public static Piece createBlack(Type type){
-        return new Piece(Color.BLACK, type);
-    }
-
-    public static Piece createBlank() {
-        return new Piece(Color.NOCOLOR, Type.NO_PIECE);
-    }
+    public abstract boolean verifyMovePosition();
 
     public boolean isBlack() {
         return this.color == Color.BLACK;
@@ -77,15 +40,15 @@ public class Piece {
         return this.color == Color.WHITE;
     }
 
+    public Double getPoint() {
+        return this.type.getScore();
+    }
+
     public boolean isSame(Color color, Type type) {
         if (this.color == color && this.type == type) {
             return true;
         }
         return false;
-    }
-
-    public Double getPoint() {
-        return this.type.score;
     }
 
     @Override

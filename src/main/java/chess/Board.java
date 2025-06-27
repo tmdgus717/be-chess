@@ -2,11 +2,10 @@ package chess;
 
 import chess.pieces.Piece;
 
-import static utils.StringUtils.appendNewLine;
-
 import chess.pieces.Piece.Color;
-import chess.pieces.Piece.Type;
+import chess.pieces.PieceFactory;
 import chess.pieces.Position;
+import chess.pieces.enums.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,42 +71,10 @@ public class Board {
 
         Piece beforePiece = findRank(beforePos).getPiece(beforePos);
         move(after, beforePiece);
-        move(before, Piece.createBlank());
+        move(before, PieceFactory.getInstance().createBlank());
     }
 
     private Rank findRank(Position position) {
         return ranks.get(position.getY());
-    }
-
-    public Double calculatePoint(Color color) {
-        double point = 0;
-        for (Rank rank : ranks) {
-            point += rank.calculatePointBy(color);
-        }
-
-        point = calculatePointDetail(point, color);
-
-        return point;
-    }
-
-    private double calculatePointDetail(double point, Color color) {
-
-        for (int i = 0; i < 8; i++) {
-            int count = 0;
-            for (Rank rank : ranks) {
-                Piece piece = rank.getPieceByIndex(i);
-                if (piece.isSame(color, Type.PAWN)) {
-                    count++;
-                }
-            }
-
-            if (count >= 2) {
-                double pawnPoint = Type.PAWN.getScore() * count;
-                pawnPoint /= 2;
-                point -= pawnPoint;
-            }
-        }
-
-        return point;
     }
 }

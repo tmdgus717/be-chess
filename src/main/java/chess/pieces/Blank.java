@@ -4,14 +4,15 @@ import chess.pieces.enums.Direction;
 import chess.pieces.enums.Type;
 import java.util.List;
 
-public class Knight extends Piece{
+public class Blank extends Piece{
 
-    public Knight(Color color) {
-        super(color, Type.KNIGHT, Direction.knightsDirection());
+    public Blank(Color color) {
+        super(color, Type.NO_PIECE, null);
     }
 
     @Override
     public boolean verifyMovePosition() {
+        //Blank 는 항상 움직일 수 없다
         return false;
     }
 }

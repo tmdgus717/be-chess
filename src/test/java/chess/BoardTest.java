@@ -5,7 +5,8 @@ import chess.pieces.Piece;
 import static utils.StringUtils.appendNewLine;
 
 import chess.pieces.Piece.Color;
-import chess.pieces.Piece.Type;
+import chess.pieces.PieceFactory;
+import chess.pieces.enums.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,12 +16,16 @@ import static org.assertj.core.api.Assertions.*;
 class BoardTest {
 
     Board board;
+    ChessGame chessGame;
     ChessView chessView;
+
+    PieceFactory pieceFactory;
 
     @BeforeEach
     public void setUp() {
 
         board = new Board();
+        chessGame = new ChessGame(board);
         chessView = new ChessView(board);
     }
 
@@ -52,10 +57,10 @@ class BoardTest {
     public void findPiece() throws Exception {
         board.initialize();
 
-        assertThat(board.findPiece("a8")).isEqualTo(Piece.createBlack(Type.ROOK));
-        assertThat(board.findPiece("h8")).isEqualTo(Piece.createBlack(Type.ROOK));
-        assertThat(board.findPiece("a1")).isEqualTo(Piece.createWhite(Type.ROOK));
-        assertThat(board.findPiece("h1")).isEqualTo(Piece.createWhite(Type.ROOK));
+        assertThat(board.findPiece("a8")).isEqualTo(pieceFactory.createBlack(Type.ROOK));
+        assertThat(board.findPiece("h8")).isEqualTo(pieceFactory.createBlack(Type.ROOK));
+        assertThat(board.findPiece("a1")).isEqualTo(pieceFactory.createWhite(Type.ROOK));
+        assertThat(board.findPiece("h1")).isEqualTo(pieceFactory.createWhite(Type.ROOK));
     }
 
     @Test
@@ -63,7 +68,7 @@ class BoardTest {
         board.initializeEmpty();
 
         String position = "b5";
-        Piece piece = Piece.createBlack(Type.ROOK);
+        Piece piece = pieceFactory.createBlack(Type.ROOK);
         board.move(position, piece);
 
         assertThat(board.findPiece(position)).isEqualTo(piece);
@@ -75,19 +80,18 @@ class BoardTest {
     public void caculcatePoint() throws Exception {
         board.initializeEmpty();
 
-        addPiece("b6", Piece.createBlack(Type.PAWN));
-        addPiece("e6", Piece.createBlack(Type.QUEEN));
-        addPiece("b8", Piece.createBlack(Type.KING));
-        addPiece("c8", Piece.createBlack(Type.ROOK));
+        addPiece("b6", pieceFactory.createBlack(Type.PAWN));
+        addPiece("e6", pieceFactory.createBlack(Type.QUEEN));
+        addPiece("b8", pieceFactory.createBlack(Type.KING));
+        addPiece("c8", pieceFactory.createBlack(Type.ROOK));
+        addPiece("f2", pieceFactory.createWhite(Type.PAWN)); //1
+        addPiece("g2", pieceFactory.createWhite(Type.PAWN)); //1.5
+        addPiece("g3", pieceFactory.createWhite(Type.PAWN)); //2
+        addPiece("e1", pieceFactory.createWhite(Type.ROOK)); //7
+        addPiece("f1", pieceFactory.createWhite(Type.KING)); //7
 
-        addPiece("f2", Piece.createWhite(Type.PAWN)); //1
-        addPiece("g2", Piece.createWhite(Type.PAWN)); //1.5
-        addPiece("g3", Piece.createWhite(Type.PAWN)); //2
-        addPiece("e1", Piece.createWhite(Type.ROOK)); //7
-        addPiece("f1", Piece.createWhite(Type.KING)); //7
-
-        assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(15.0);
-        assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(7.0);
+        assertThat(chessGame.calculatePoint(Color.BLACK)).isEqualTo(15.0);
+        assertThat(chessGame.calculatePoint(Color.WHITE)).isEqualTo(7.0);
 
         System.out.println(chessView.showBoard());
     }
@@ -106,7 +110,7 @@ class BoardTest {
 
         System.out.println(chessView.showBoard());
 
-        assertThat(board.findPiece(sourcePosition)).isEqualTo(Piece.createBlank());
-        assertThat(board.findPiece(targetPosition)).isEqualTo(Piece.createWhite(Type.PAWN));
+        assertThat(board.findPiece(sourcePosition)).isEqualTo(pieceFactory.createBlank());
+        assertThat(board.findPiece(targetPosition)).isEqualTo(pieceFactory.createWhite(Type.PAWN));
     }
 }
