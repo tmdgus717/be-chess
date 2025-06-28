@@ -2,7 +2,6 @@ package chess.pieces;
 
 import chess.pieces.enums.Direction;
 import chess.pieces.enums.Type;
-import java.util.List;
 
 public class Pawn extends Piece{
 
@@ -11,7 +10,19 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition() {
-        return false;
+    public boolean verifyMovePosition(Position curr, Position after) {
+        int dx = after.getX() - curr.getX();
+        int dy = after.getY() - curr.getY();
+
+        System.out.println(dx);
+        System.out.println(Math.abs(dy));
+        Position position = new Position(after.getX(), after.getY());
+
+        if (!position.isInsideBoard() || Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+            System.out.println("??");
+            return false;
+        }
+
+        return directions.stream().anyMatch(direction -> direction.isSame(dx, dy));
     }
 }

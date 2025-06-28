@@ -1,5 +1,6 @@
 package chess.pieces.creator;
 
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
 import chess.pieces.enums.Type;
@@ -13,6 +14,6 @@ public class PawnCreator implements PieceCreator{
 
     @Override
     public Piece create(Color color) {
-        return null;
+        return new Pawn(color);
     }
 }

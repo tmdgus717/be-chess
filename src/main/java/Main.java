@@ -1,5 +1,6 @@
 import chess.Board;
 
+import chess.ChessGame;
 import chess.ChessView;
 import chess.pieces.Bishop;
 import chess.pieces.King;
@@ -23,6 +24,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Board board = new Board();
         ChessView chessView = new ChessView(board);
+        ChessGame chessGame = new ChessGame(board);
 
         while (true) {
             String command = scanner.nextLine();
@@ -34,7 +36,7 @@ public class Main {
             if (command.startsWith(MOVE)) {
                 String[] position = extractPosition(command);
 
-                board.move(position[0], position[1]);
+                chessGame.move(position[0], position[1]);
                 System.out.println(chessView.showBoard());
             }
 

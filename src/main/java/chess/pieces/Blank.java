@@ -11,8 +11,7 @@ public class Blank extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition() {
-        //Blank 는 항상 움직일 수 없다
+    public boolean verifyMovePosition(Position curr, Position after) {
         return false;
     }
 }

@@ -2,6 +2,8 @@ package chess;
 
 import chess.pieces.Piece;
 import chess.pieces.Piece.Color;
+import chess.pieces.PieceFactory;
+import chess.pieces.Position;
 import chess.pieces.enums.Type;
 
 
@@ -12,6 +14,32 @@ public class ChessGame {
     public ChessGame(Board board) {
         this.board = board;
     }
+
+    public void move(String positionString, Piece piece) {
+        Position position = new Position(positionString);
+
+        Rank rank = board.findRank(position);
+        rank.setPiece(position, piece);
+    }
+
+    public void move(String curr, String after) {
+        Position currPosition = new Position(curr);
+        Position afterPosition = new Position(after);
+
+        Piece currPiece = board.findRank(currPosition).getPiece(currPosition);
+
+        boolean isMove = currPiece.verifyMovePosition(currPosition, afterPosition);//예외를 던지면 처리하는 로직 필요
+
+        if (isMove) {
+            move(after, currPiece);
+            move(curr, PieceFactory.getInstance().createBlank());
+        }
+        else {
+            System.out.println("올바르지 않은 위치입니다.");
+        }
+
+    }
+
 
     public Double calculatePoint(Color color) {
         double point = 0;

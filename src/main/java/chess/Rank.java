@@ -19,6 +19,8 @@ public class Rank {
         Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN, Type.KING, Type.BISHOP, Type.KNIGHT, Type.ROOK
     );
 
+
+    PieceFactory pieceFactory = PieceFactory.getInstance();
     List<Piece> pieces = new ArrayList<>(COLUMN_SIZE);
 
     public Rank() {
@@ -66,8 +68,6 @@ public class Rank {
     }
 
     private Piece createPiece(Type type, Color color) {
-        PieceFactory pieceFactory = PieceFactory.getInstance();
-
         if (type == Type.NO_PIECE) {
             return pieceFactory.createBlank();
         }

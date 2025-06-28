@@ -2,7 +2,6 @@ package chess.pieces;
 
 import chess.pieces.enums.Direction;
 import chess.pieces.enums.Type;
-import java.util.List;
 
 public class Knight extends Piece{
 
@@ -11,7 +10,11 @@ public class Knight extends Piece{
     }
 
     @Override
-    public boolean verifyMovePosition() {
-        return false;
+    public boolean verifyMovePosition(Position curr, Position after) {
+        int dx = after.getX() - curr.getX();// x축으로 얼마나 이동했는가
+        int dy = after.getY() - curr.getY();// y축으로 얼마나 이동했는가?
+
+        return directions.stream()
+            .anyMatch(direction -> direction.isSame(dx, dy));
     }
 }

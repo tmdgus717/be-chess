@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//팩토리 + 옵저버 패턴 적용
 public class PieceFactory {
 
     private static final PieceFactory instance = new PieceFactory();
@@ -51,6 +50,6 @@ public class PieceFactory {
     }
 
     public Piece createBlank() {
-        return null;
+        return new Blank(Color.NOCOLOR);
     }
 }

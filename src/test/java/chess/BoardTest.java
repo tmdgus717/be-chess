@@ -69,7 +69,7 @@ class BoardTest {
 
         String position = "b5";
         Piece piece = pieceFactory.createBlack(Type.ROOK);
-        board.move(position, piece);
+        chessGame.move(position, piece);
 
         assertThat(board.findPiece(position)).isEqualTo(piece);
         System.out.println(chessView.showBoard());
@@ -97,7 +97,7 @@ class BoardTest {
     }
 
     private void addPiece(String position, Piece piece) {
-        board.move(position, piece);
+        chessGame.move(position, piece);
     }
 
     @Test
@@ -106,7 +106,7 @@ class BoardTest {
 
         String sourcePosition = "b2";
         String targetPosition = "b3";
-        board.move(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition);
 
         System.out.println(chessView.showBoard());
 

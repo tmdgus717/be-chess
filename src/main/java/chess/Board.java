@@ -59,22 +59,8 @@ public class Board {
         return rank.getPiece(position);
     }
 
-    public void move(String positionString, Piece piece) {
-        Position position = new Position(positionString);
-
-        Rank rank = findRank(position);
-        rank.setPiece(position, piece);
-    }
-
-    public void move(String before, String after) {
-        Position beforePos = new Position(before);
-
-        Piece beforePiece = findRank(beforePos).getPiece(beforePos);
-        move(after, beforePiece);
-        move(before, PieceFactory.getInstance().createBlank());
-    }
-
-    private Rank findRank(Position position) {
+    public Rank findRank(Position position) {
         return ranks.get(position.getY());
     }
+
 }

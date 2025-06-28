@@ -6,11 +6,11 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private final Color color;
+    protected final Color color;
 
-    private final Type type;
+    protected final Type type;
 
-    private final List<Direction> directions;
+    protected final List<Direction> directions;
 
     public enum Color {
         WHITE, BLACK, NOCOLOR;
@@ -30,7 +30,7 @@ public abstract class Piece {
         return type;
     }
 
-    public abstract boolean verifyMovePosition();
+    public abstract boolean verifyMovePosition(Position curr, Position after);
 
     public boolean isBlack() {
         return this.color == Color.BLACK;
@@ -48,6 +48,28 @@ public abstract class Piece {
         if (this.color == color && this.type == type) {
             return true;
         }
+        return false;
+    }
+
+    protected boolean canMove(Position curr, Position after) {
+        int dx = after.getX() - curr.getX();// x축으로 얼마나 이동했는가
+        int dy = after.getY() - curr.getY();// y축으로 얼마나 이동했는가?
+
+        System.out.println(after.getX());
+        System.out.println(after.getY());
+
+        Direction direction = Direction.findDirection(dx, dy);
+        System.out.println(direction);
+        Position position = new Position(curr.getX(), curr.getY());
+
+        while (position.isInsideBoard()){
+            System.out.println("while");
+            position.update(direction);
+            if (position.equals(after)) {
+                return true;
+            }
+        }
+
         return false;
     }
 
